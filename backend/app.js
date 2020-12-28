@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = express.Router();
-//const mongoose = require('mongoose');
-//const path = require('path');
 
 const messageRoutes = require('./routes/messages');
 
@@ -13,13 +11,6 @@ const messageRoutes = require('./routes/messages');
 
 const app = express();
 
-// mongoose.connect(`mongodb+srv://filind:UGknPts9gQGYPnZZ@cluster0-8zbzf.mongodb.net/item?retryWrites=true&w=majority`)
-// .then(() => {
-//   console.log('connected to DB');
-// })
-// .catch(() => {
-//   console.log('connection problems')
-// })
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -27,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use( (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Header', 'Authorization', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Headers', '*'); // do not think that it is good to allow all here, but not sure what should be allowed. Otherwise cannot post.
+  res.setHeader('Access-Control-Allow-Headers', '*');
   res.setHeader('Access-Control-Allow-Methods',
   "GET, PUT, POST, DELETE, OPTIONS, PATCH");
   next();
