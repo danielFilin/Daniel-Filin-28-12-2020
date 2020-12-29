@@ -24,6 +24,7 @@ export class AddMessageComponent implements OnInit {
       'senderId': new FormControl(null, [Validators.required]),
     });
     this.messagesService.getInfoMessage().subscribe((message: String) => {
+      console.log(message);
       if (message === 'message was added') {
         this.infoMessage = 'Your message was sent';
         this.messageClass = false;
@@ -45,9 +46,10 @@ export class AddMessageComponent implements OnInit {
       recieverId: this.messageForm.value.recieverId,
       senderId: this.messageForm.value.senderId,
       date: Date.now(),
+      _id: null
     }
     this.messagesService.addEmail(email);
-    //const info = this.messagesService.getInfoMessage();
+    const info = this.messagesService.getInfoMessage();
     //console.log(info);
     this.messageForm.reset(this.messageForm.value.subject);
     this.messageForm.markAsPristine();

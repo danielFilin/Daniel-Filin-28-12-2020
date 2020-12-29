@@ -1,16 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const router = express.Router();
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
 
 const messageRoutes = require('./routes/messages');
+const userRoutes = require('./routes/user');
 
 
-// mongoose.set('useNewUrlParser', true);
-// mongoose.set('useFindAndModify', false);
-// mongoose.set('useUnifiedTopology', true);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
 
 const app = express();
 
+mongoose.connect(`mongodb+srv://filind85:${keys.mongoDB}@cluster0.uyhhd.mongodb.net/messages?retryWrites=true&w=majority`).then(() => {
+  console.log('connected to DB')
+})
+.catch( ()=> {
+  console.log('connection failed')
+})
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,6 +33,7 @@ app.use( (req, res, next) => {
 });
 
 app.use(messageRoutes);
+app.use(userRoutes);
 
 const port = process.env.PORT || 5000;
 

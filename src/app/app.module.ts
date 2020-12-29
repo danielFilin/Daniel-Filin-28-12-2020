@@ -9,8 +9,11 @@ import { RouterModule } from '@angular/router';
 
 import { AddMessageComponent } from './messages/add-message/add-message.component';
 import { HeaderComponent } from './header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,8 @@ import { MessagesListComponent } from './messages/messages-list/messages-list.co
     AddMessageComponent,
     HeaderComponent,
     MessagesListComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,7 @@ import { MessagesListComponent } from './messages/messages-list/messages-list.co
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}] ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }

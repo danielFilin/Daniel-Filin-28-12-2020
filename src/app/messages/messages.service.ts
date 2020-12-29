@@ -41,18 +41,17 @@ export class MessagesService {
   getMessages() {
     this.http.get<{message: string,  body: Email[]}>(BACKEND_URL + `user/get-messages`)
       .subscribe((responseData) => {
+        console.log(responseData);
         this.messages = responseData.body;
-        console.log(this.messages);
         this.updatedMessages.next([...this.messages]);
       });
   }
 
   deleteMessage(id) {
     this.http.delete<{message: string, body: Email[]}>(BACKEND_URL + `user/delete-message/${id}`)
-      .subscribe((responseData) => {
-        this.messages = responseData.body;
-        console.log(this.messages)
-
+      .subscribe(() => {
+        const updatedMessages = this.messages.filter(message => message._id !== id);
+        this.messages = updatedMessages;
         this.deleteMessages.next([...this.messages]);
       });
   }

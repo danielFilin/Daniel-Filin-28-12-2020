@@ -3,7 +3,6 @@ const isEmpty = require('./isEmpty');
 
 module.exports = function validateRegisterInput(message) {
   let errors = {};
-
   if(!Validator.isLength(message.subject, {min:2, max: 150})){
     errors.subject = 'Subject should be at least 2 and maximum 150 charachters long';
   }
@@ -12,12 +11,11 @@ module.exports = function validateRegisterInput(message) {
     errors.content = 'Content should be at least 2 and maximum 2000 charachters long';
   }
 
-  if(Validator.isEmpty(message.senderId)){
-    errors.content = 'The sender ID cannot be left blank';
+  if(Validator.isEmpty(message.senderId.toString())){
+    errors.senderId = 'The sender ID cannot be left blank';
   }
-
-  if(Validator.isEmpty(message.recieverId)){
-    errors.content = 'The reciever ID cannot be left blank';
+  if(Validator.isEmpty(message.recieverId.toString())){
+    errors.conterecieverIdnt = 'The reciever ID cannot be left blank';
   }
 
   return {

@@ -4,4 +4,5 @@ export interface Email {
   senderId: number;
   recieverId: string;
   date: number;
+  _id: string;
 }

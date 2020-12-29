@@ -13,7 +13,7 @@
             type="button"
             class="close text-danger"
             aria-label="Close"
-            (click)="deleteMessage(message.date)"
+            (click)="deleteMessage(message)"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -24,11 +24,11 @@
     <h4 class="text-center">Received Messages</h4>
     <div class="alert-message alert-message-success" *ngFor='let message of recievedMessages'>
       <h4>{{message.subject}}</h4>
-      <button
+      <button *ngIf="userIsAuthenticated"
         type="button"
         class="close text-danger"
         aria-label="Close"
-        (click)="deleteMessage(message.date)"
+        (click)="deleteMessage(message._id)"
       >
         <span aria-hidden="true">&times;</span>
       </button>
