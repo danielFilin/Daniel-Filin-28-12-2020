@@ -32,14 +32,14 @@ export class MessagesService {
   }
 
   addEmail(email) {
-    this.http.post<{message: string, email: Email}>(BACKEND_URL + `user/new-message`, email)
+    this.http.post<{message: string, email: Email}>(`user/new-message`, email)
       .subscribe((responseData) => {
         this.infoMessage.next(responseData.message);
       });
   }
 
   getMessages() {
-    this.http.get<{sentMessages: {sentMessages: Email[]}, recievedMessages: {recievedMessages: Email[]}}>(BACKEND_URL + `user/get-messages`)
+    this.http.get<{sentMessages: {sentMessages: Email[]}, recievedMessages: {recievedMessages: Email[]}}>(`user/get-messages`)
       .subscribe((responseData) => {
         this.messages = [...responseData.sentMessages.sentMessages, ...responseData.recievedMessages.recievedMessages];
         this.updatedMessages.next([...this.messages]);
@@ -47,7 +47,7 @@ export class MessagesService {
   }
 
   deleteMessage(id, messageStatus) {
-    this.http.delete<{message: string, body: Email[]}>(BACKEND_URL + `user/delete-message/${id}/${messageStatus}`)
+    this.http.delete<{message: string, body: Email[]}>(`user/delete-message/${id}/${messageStatus}`)
       .subscribe(() => {
         const updatedMessages = this.messages.filter(message => message._id !== id);
         this.messages = updatedMessages;
