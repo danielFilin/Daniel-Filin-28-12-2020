@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 
@@ -34,6 +35,11 @@ app.use( (req, res, next) => {
 
 app.use(messageRoutes);
 app.use(userRoutes);
+
+app.use(express.static(__dirname + '../dist/messages'));
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname + '../dist/messages/index.html'))
+})
 
 const port = process.env.PORT || 8080;
 
