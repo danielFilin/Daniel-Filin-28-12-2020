@@ -15,6 +15,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   authSubscription: Subscription;
   isErrorOnLogin = false;
+  prohibittedEmail = false;
   infoMessage = 'The data you provided is incorrect';
 
   constructor(private authService: AuthService) { }
@@ -26,8 +27,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
 
     this.authSubscription = this.authService.getAuthStatusListener().subscribe(authStatus => {
-      console.log(authStatus);
       this.isLoading = authStatus;
+      if (!authStatus) {
+        this.prohibittedEmail = true;
+      }
       this.isErrorOnLogin = true;
     });
   }

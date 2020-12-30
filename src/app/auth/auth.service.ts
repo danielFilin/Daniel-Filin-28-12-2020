@@ -44,8 +44,9 @@ export class AuthService {
       .subscribe((responseData) => {
         console.log(responseData);
         this.router.navigate(['/']);
-        //this.infoMessage.next(responseData.message);
         this.authStatusListener.next();
+      }, err => {
+        this.authStatusListener.next(false)
       });
   }
 
@@ -54,7 +55,7 @@ export class AuthService {
       email,
       password
     }
-    this.http.post<{token: string, expiresIn: number, userId: string}>(BACKEND_URL + `login`, authData)
+    this.http.post<{token: string, expiresIn: number, userId: string, errors: string}>(BACKEND_URL + `login`, authData)
       .subscribe((responseData) => {
         this.token = responseData.token;
         if (this.token) {
@@ -68,6 +69,8 @@ export class AuthService {
           this.saveAuthData(this.token, expirationDate, this.userId);
           this.router.navigate(['/']);
         }
+      }, err => {
+        this.authStatusListener.next(false);
       });
   }
 

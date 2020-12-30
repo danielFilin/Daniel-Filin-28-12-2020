@@ -27,8 +27,8 @@ export class MessagesListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.messagesService.getMessages();
     this.currentUserId = this.authService.getUserId();
-    this.messagesSubscription = this.messagesService.getMessagesUpdateListener().subscribe((message:  Email[]) => {
-      this.allMessages = message;
+    this.messagesSubscription = this.messagesService.getMessagesUpdateListener().subscribe((responseData) => {
+      this.allMessages = responseData;
     });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSubscription = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
@@ -51,7 +51,6 @@ export class MessagesListComponent implements OnInit, OnDestroy {
     }
     this.inputValue = true;
     //this.currentUserId = this.authService.getUserId();
-    console.log(this.allMessages);
     this.recievedMessages = this.allMessages.filter((message) =>  message.senderId != id);
     this.sentMessages = this.allMessages.filter((message) => message.senderId == id);
   }

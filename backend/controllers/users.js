@@ -34,7 +34,9 @@ exports.loginUser = async (req, res) => {
 
   const { errors, isValid} = validateUserInput(req.body);
   if (!isValid) {
-      return res.status(400).json(errors);
+      return res.status(400).json({
+        errors: errors,
+      });
   }
   try {
     const logedUser = await User.findOne({email: req.body.email});
