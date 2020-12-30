@@ -8,7 +8,7 @@ import { AddMessageComponent } from './messages/add-message/add-message.componen
 import { MessagesListComponent } from './messages/messages-list/messages-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/show-messages', pathMatch: 'full'},
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: 'add-message', component: AddMessageComponent, canActivate: [AuthGuard]},
   { path: 'show-messages', component: MessagesListComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
