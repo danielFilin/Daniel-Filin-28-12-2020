@@ -39,16 +39,15 @@ export class MessagesService {
   }
 
   getMessages() {
-    this.http.get<{message: string,  body: Email[]}>(BACKEND_URL + `user/get-messages`)
+    this.http.get<{sentMessages: {sentMessages: Email[]}, recievedMessages: {recievedMessages: Email[]}}>(BACKEND_URL + `user/get-messages`)
       .subscribe((responseData) => {
-        console.log(responseData);
-        this.messages = responseData.body;
+        this.messages = [...responseData.sentMessages.sentMessages, ...responseData.recievedMessages.recievedMessages];
         this.updatedMessages.next([...this.messages]);
       });
   }
 
-  deleteMessage(id) {
-    this.http.delete<{message: string, body: Email[]}>(BACKEND_URL + `user/delete-message/${id}`)
+  deleteMessage(id, messageStatus) {
+    this.http.delete<{message: string, body: Email[]}>(BACKEND_URL + `user/delete-message/${id}/${messageStatus}`)
       .subscribe(() => {
         const updatedMessages = this.messages.filter(message => message._id !== id);
         this.messages = updatedMessages;

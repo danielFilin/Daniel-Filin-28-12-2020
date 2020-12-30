@@ -13,17 +13,21 @@ export class MessagesListComponent implements OnInit, OnDestroy {
   messagesSubscription: Subscription;
   onDeleteMessageSubscription: Subscription;
   authStatusSubscription: Subscription;
+  inputValue: Boolean = true;
   allMessages: Email[] = [];
   sentMessages: Email[] = [];
   recievedMessages: Email[] = [];
-  currentId: String;
+  currentUserId: String;
   userIsAuthenticated = false;
+  onDeleteMessageInfo: Boolean = false;
+
 
   constructor(private messagesService: MessagesService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.messagesService.getMessages();
-    this.messagesSubscription = this.messagesService.getMessagesUpdateListener().subscribe((message: Email[]) => {
+    this.currentUserId = this.authService.getUserId();
+    this.messagesSubscription = this.messagesService.getMessagesUpdateListener().subscribe((message:  Email[]) => {
       this.allMessages = message;
     });
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -33,18 +37,27 @@ export class MessagesListComponent implements OnInit, OnDestroy {
 
     this.onDeleteMessageSubscription = this.messagesService.getMessageDeleteListener().subscribe( (message: Email[]) => {
       this.allMessages = message;
-      this.searchItems(this.currentId);
+      this.searchItems(this.currentUserId);
+      this.onDeleteMessageInfo = true;
+      setTimeout(() => {
+        this.onDeleteMessageInfo = false;;
+      }, 5000);
     })
   }
 
   searchItems(id) {
-    this.currentId = id;
-    this.recievedMessages = this.allMessages.filter((message) =>  message.senderId != id.value);
-    this.sentMessages = this.allMessages.filter((message) => message.senderId == id.value);
+    if (id.value) {
+      id = id.value;
+    }
+    this.inputValue = true;
+    //this.currentUserId = this.authService.getUserId();
+    console.log(this.allMessages);
+    this.recievedMessages = this.allMessages.filter((message) =>  message.senderId != id);
+    this.sentMessages = this.allMessages.filter((message) => message.senderId == id);
   }
 
-  deleteMessage(id) {
-    this.messagesService.deleteMessage(id);
+  deleteMessage(idToDelete, messageStatus) {
+    this.messagesService.deleteMessage(idToDelete, messageStatus);
   }
 
   ngOnDestroy() {

@@ -1,19 +1,22 @@
-<h2>Messages List</h2>
-<input type="number" class="form-control" placeholder="Input User ID..." #search>
+<h2 class="text-center mb-5">Messages List</h2>
+<input type="string" [(ngModel)]="currentUserId" class="form-control w-50" placeholder={{[(currentUserId)]}} #search disabled>
 
 <button class="btn btn-info mr-3 mt-3" type="button" (click)='searchItems(search)'>
   Search<i class="fa fa-search"></i>
 </button>
+<p class='text-danger' *ngIf='!inputValue'>Please enter sender Id</p>
+<p class='text-success' *ngIf='onDeleteMessageInfo'>Message was deleted!</p>
 <div class="row">
   <div class="col-sm-6 col-md-6" >
     <h4 class="text-center">Sent Messages</h4>
-      <div class="alert-message alert-message-success" *ngFor='let message of sentMessages'>
+      <div class="alert-message alert-message-success border p-3" *ngFor='let message of sentMessages'>
           <h4>{{message.subject}}</h4>
+          <span>Date: {{message.date}}</span>
           <button
             type="button"
             class="close text-danger"
             aria-label="Close"
-            (click)="deleteMessage(message)"
+            (click)="deleteMessage(message._id, 'sent')"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -22,16 +25,17 @@
   </div>
   <div class="col-sm-6 col-md-6">
     <h4 class="text-center">Received Messages</h4>
-    <div class="alert-message alert-message-success" *ngFor='let message of recievedMessages'>
-      <h4>{{message.subject}}</h4>
-      <button *ngIf="userIsAuthenticated"
+    <div class="alert-message alert-message-success border p-3" *ngFor='let message of recievedMessages'>
+      <h4>Subject: {{message.subject}}</h4>
+      <span>Date: {{message.date}}</span>
+      <button
         type="button"
         class="close text-danger"
         aria-label="Close"
-        (click)="deleteMessage(message._id)"
+        (click)="deleteMessage(message._id, 'recieved')"
       >
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <span aria-hidden="true">&times;</span>
+    </button>
       <p>{{message.content}}</p>
   </div>
   </div>

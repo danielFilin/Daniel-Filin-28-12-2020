@@ -1,9 +1,10 @@
+<h2 class="text-justify">User Signup</h2>
 <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
   <div class="form-group">
     <label for="email">Email</label>
     <input
       type="email"
-      class="form-control"
+      class="form-control w-50"
       id="email"
       placeholder="Enter email"
       formControlName="email">
@@ -13,7 +14,7 @@
     <label for="messageBody">Password</label>
     <input
       type="password"
-      class="form-control"
+      class="form-control w-50"
       id="messageBody"
       placeholder="Enter password"
       formControlName="password">
@@ -22,4 +23,3 @@
   <h6 *ngIf="!signupForm.valid && signupForm.touched" class="help-block wrong-input">You must fill in the form correctly</h6>
   <button class="btn btn-primary" type="submit">Login</button>
 </form>
-<!-- <span class="text-center" [ngClass]=" messageClass ? 'text-danger' : 'text-success'">{{infoMessage}}</span> -->

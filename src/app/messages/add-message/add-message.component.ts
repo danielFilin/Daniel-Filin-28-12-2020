@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Email } from 'src/app/models/email.model';
 import { MessagesService } from '../messages.service';
 
@@ -13,13 +14,15 @@ export class AddMessageComponent implements OnInit {
   submitButtonClicked = false;
   infoMessage: String;
   messageClass: Boolean;
+  currentUserId: String;
 
-  constructor(private messagesService: MessagesService) {}
+  constructor(private messagesService: MessagesService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getUserId();
     this.messageForm = new FormGroup({
-      'subject': new FormControl(null, [Validators.required]),
-      'content': new FormControl(null, [Validators.required]),
+      'subject': new FormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]),
+      'content': new FormControl(null, [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
       'recieverId': new FormControl(null, [Validators.required]),
       'senderId': new FormControl(null, [Validators.required]),
     });
@@ -48,10 +51,15 @@ export class AddMessageComponent implements OnInit {
       date: Date.now(),
       _id: null
     }
+
     this.messagesService.addEmail(email);
-    const info = this.messagesService.getInfoMessage();
-    //console.log(info);
-    this.messageForm.reset(this.messageForm.value.subject);
+    //const info = this.messagesService.getInfoMessage();
+    this.messageForm.setValue({
+      subject: '',
+      content: '',
+      recieverId: '',
+      senderId: this.currentUserId,
+    });
     this.messageForm.markAsPristine();
     this.messageForm.markAsUntouched();
   }

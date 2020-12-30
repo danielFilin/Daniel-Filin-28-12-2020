@@ -1,16 +1,15 @@
 const bcrypt = require('bcryptjs');
-
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 
-exports.signupUser = async (req, res) => {
-// DcjKBqPywLMsaB2
-  // const { errors, isValid} = validateMessageInput(req.body);
+const validateUserInput = require('../validation/user');
 
-  // if (!isValid) {
-  //     return res.status(400).json(errors);
-  // }
+exports.signupUser = async (req, res) => {
+  const { errors, isValid} = validateUserInput(req.body);
+  if (!isValid) {
+      return res.status(400).json(errors);
+  }
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = new User({
       email: req.body.email,
@@ -25,7 +24,7 @@ exports.signupUser = async (req, res) => {
     } catch (err) {
       res.status(500).json({
         err: err,
-        message: 'User was not added!'
+        message: 'User was not created!'
       })
     }
 
@@ -33,11 +32,10 @@ exports.signupUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
 
-  // const { errors, isValid} = validateMessageInput(req.body);
-
-  // if (!isValid) {
-  //     return res.status(400).json(errors);
-  // }
+  const { errors, isValid} = validateUserInput(req.body);
+  if (!isValid) {
+      return res.status(400).json(errors);
+  }
   try {
     const logedUser = await User.findOne({email: req.body.email});
     if (!logedUser) {
@@ -52,7 +50,8 @@ exports.loginUser = async (req, res) => {
     res.status(200).json({
       message: 'message was added',
       token: token,
-      expiresIn: 3600
+      expiresIn: 3600,
+      userId: logedUser._id
    })
   } catch (err) {
       res.status(500).json({

@@ -14,10 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   authSubscription: Subscription;
   isErrorOnLogin = false;
-  infoMessage = 'The data you provided is incorrect';
-  loginOnErrorTitle = 'Error: Login Failed';
-  btnClass = 'btn btn-danger';
-  errClass = 'error';
+  infoMessage = 'Login Problem';
 
   constructor(private authService: AuthService) { }
 
@@ -27,10 +24,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: new FormControl(null, Validators.required)
     });
 
-    // this.authSubscription = this.authService.getAuthStatusListener().subscribe(authStatus => {
-    //   this.isLoading = authStatus;
-    //   this.isErrorOnLogin = true;
-    // });
+    this.authSubscription = this.authService.getAuthStatusListener().subscribe(authStatus => {
+      this.isLoading = authStatus;
+      this.isErrorOnLogin = true;
+    });
   }
 
   onHandleError() {
@@ -46,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.authSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 
 }

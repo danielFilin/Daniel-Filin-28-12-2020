@@ -15,6 +15,10 @@ const userSchema = Schema({
   },
   resetToken: String,
   resetTokenExpiration: Date,
+  messages: {
+    sentMessages: [{ type: Schema.Types.ObjectId, ref: 'Message', required: true}],
+    recievedMessages: [{ type: Schema.Types.ObjectId, ref: 'Message', required: true}]
+  },
 });
 
 userSchema.plugin(uniqeuValidator);

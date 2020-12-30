@@ -10,7 +10,7 @@ import { MessagesListComponent } from './messages/messages-list/messages-list.co
 const routes: Routes = [
   { path: '', redirectTo: '/show-messages', pathMatch: 'full'},
   { path: 'add-message', component: AddMessageComponent, canActivate: [AuthGuard]},
-  { path: 'show-messages', component: MessagesListComponent},
+  { path: 'show-messages', component: MessagesListComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
 ];

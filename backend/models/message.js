@@ -13,11 +13,11 @@ const messageSchema = Schema({
     required: true
   },
   senderId: {
-    type: Number,
+    type: String,
     required: true,
   },
   recieverId: {
-    type: Number,
+    type: String,
     required: true
   },
   date: {

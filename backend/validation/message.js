@@ -1,5 +1,5 @@
-const Validator = require('validator');
 const isEmpty = require('./isEmpty');
+const Validator = require('validator');
 
 module.exports = function validateRegisterInput(message) {
   let errors = {};
@@ -11,10 +11,10 @@ module.exports = function validateRegisterInput(message) {
     errors.content = 'Content should be at least 2 and maximum 2000 charachters long';
   }
 
-  if(Validator.isEmpty(message.senderId.toString())){
+  if(Validator.isEmpty(message.senderId)){
     errors.senderId = 'The sender ID cannot be left blank';
   }
-  if(Validator.isEmpty(message.recieverId.toString())){
+  if(Validator.isEmpty(message.recieverId)){
     errors.conterecieverIdnt = 'The reciever ID cannot be left blank';
   }
 

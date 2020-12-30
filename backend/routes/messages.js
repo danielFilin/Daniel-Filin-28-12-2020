@@ -9,6 +9,6 @@ router.post('/user/new-message', checkAuth, messagesController.addMessage);
 
 router.get('/user/get-messages', checkAuth, messagesController.getMessages);
 
-router.delete('/user/delete-message/:id', checkAuth, messagesController.deleteMessage);
+router.delete('/user/delete-message/:id/:messageStatus', checkAuth, messagesController.deleteMessage);
 
 module.exports = router;

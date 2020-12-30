@@ -10,11 +10,11 @@
       <span class='text-danger' *ngIf='messageForm.controls.subject.invalid && messageForm.controls.subject.touched'>This field cannot be left empty!</span>
   </div>
   <div class="form-group">
-    <label for="messageBody">Message</label>
+    <label for="content">Message</label>
     <textarea
       type="text"
       class="form-control"
-      id="messageBody"
+      id="content"
       placeholder="Enter Content"
       formControlName="content">
     </textarea>
@@ -23,17 +23,19 @@
   <div class="form-group">
     <label for="senderId">Sender ID</label>
     <input
-      type="number"
-      class="form-control"
+      type="string"
       id="senderId"
-      placeholder="Enter reciever ID"
-      formControlName="senderId">
+      [(ngModel)]="currentUserId"
+      class="form-control"
+      placeholder={{[(currentUserId)]}}
+      formControlName="senderId"
+      disabled>
       <span class='text-danger' *ngIf='messageForm.controls.senderId.invalid && messageForm.controls.senderId.touched'>This field cannot be left empty!</span>
   </div>
   <div class="form-group">
     <label for="recieverId">Reciever ID</label>
     <input
-      type="number"
+      type="string"
       class="form-control"
       id="recieverId"
       placeholder="Enter reciever ID"
