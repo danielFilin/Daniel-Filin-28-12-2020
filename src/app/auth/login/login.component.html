@@ -1,0 +1,36 @@
+
+  <div class="d-flex justify-content-center" *ngIf='isLoading'>
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="login">
+    <div class="login-header">
+      <h1>Login</h1>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" *ngIf='!isLoading'>
+      <div class="login-form">
+        <h4>ENTER YOUR EMAIL</h4>
+        <input
+          type="email"
+          class="input"
+          formControlName='email'>
+        <br>
+        <span *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched" class="help-block">Please enter a valid email address</span>
+        <h4>ENTER YOUR PASSWORD</h4>
+        <input
+          type="password"
+          class="input"
+          formControlName="password">
+        <br>
+        <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched" class="help-block">Your password must be at least 6 characters long
+        </span>
+        <button type="submit" class='login-button'>LOGIN</button>
+        <br>
+        <a class="sign-up" routerLink="/signup">Sign Up!</a>
+        <br>
+        <span *ngIf="!loginForm.valid && loginForm.touched" class="help-block">You must fill in the form correctly</span>
+        <h2 class="text-danger" *ngIf='isErrorOnLogin'>Your credentials are incorrect</h2>
+      </div>
+    </form>
+  </div>

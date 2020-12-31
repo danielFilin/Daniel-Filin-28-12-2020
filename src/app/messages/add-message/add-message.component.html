@@ -1,0 +1,48 @@
+<form [formGroup]="messageForm" (ngSubmit)="onAddEmail()">
+  <div class="form-group">
+    <label for="subject">Subject</label>
+    <input
+      type="text"
+      class="form-control"
+      id="subject"
+      placeholder="Enter subject"
+      formControlName="subject">
+      <span class='text-danger' *ngIf='messageForm.controls.subject.invalid && messageForm.controls.subject.touched'>This field cannot be left empty!</span>
+  </div>
+  <div class="form-group">
+    <label for="content">Message</label>
+    <textarea
+      type="text"
+      class="form-control"
+      id="content"
+      placeholder="Enter Content"
+      formControlName="content">
+    </textarea>
+    <span class='text-danger' *ngIf='messageForm.controls.content.invalid && messageForm.controls.content.touched'>This field cannot be left empty!</span>
+  </div>
+  <div class="form-group">
+    <label for="senderId">Sender ID</label>
+    <input
+      type="string"
+      id="senderId"
+      [(ngModel)]="currentUserId"
+      class="form-control"
+      placeholder={{[(currentUserId)]}}
+      formControlName="senderId"
+      disabled>
+      <span class='text-danger' *ngIf='messageForm.controls.senderId.invalid && messageForm.controls.senderId.touched'>This field cannot be left empty!</span>
+  </div>
+  <div class="form-group">
+    <label for="recieverId">Reciever ID</label>
+    <input
+      type="string"
+      class="form-control"
+      id="recieverId"
+      placeholder="Enter reciever ID"
+      formControlName="recieverId">
+      <span class="text-danger" *ngIf="messageForm.controls.recieverId.invalid && messageForm.controls.recieverId.touched">This field cannot be left empty!</span>
+  </div>
+  <h6 *ngIf="!messageForm.valid && messageForm.touched && submitButtonClicked" class="help-block wrong-input">You must fill in the form correctly</h6>
+  <button class="btn btn-primary" type="submit">Send Email</button>
+</form>
+<span class="text-center" [ngClass]=" messageClass ? 'text-danger' : 'text-success'">{{infoMessage}}</span>

@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center" *ngIf='isLoading'>
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<div class="login">
+  <div class="login-header">
+    <h1>Signup</h1>
+  </div>
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()" *ngIf='!isLoading'>
+    <div class="login-form">
+      <h4>ENTER YOUR EMAIL</h4>
+      <input
+        type="email"
+        class="input"
+        formControlName='email'>
+        <br>
+      <span *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched" class="help-block">Please enter a valid email address</span>
+      <h4>ENTER YOUR PASSWORD</h4>
+      <input
+        type="password"
+        minlength=5
+        class="input"
+        formControlName="password">
+      <br>
+      <span *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched" class="help-block">Your password must be at least 6 characters long
+      </span>
+      <br>
+      <button type="submit" class='login-button'>SIGNUP</button>
+      <br>
+      <span *ngIf="!signupForm.valid && signupForm.touched" class="help-block">You must fill in the form correctly</span>
+      <h2 class="text-danger" *ngIf='prohibittedEmail'>You are trying to use an email that is being used already</h2>
+    </div>
+  </form>
+</div>
