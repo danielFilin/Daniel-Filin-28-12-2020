@@ -19,7 +19,7 @@ module.exports = function validateUserInput(data) {
         errors.password = 'password field is required';
     }
 
-    if(Validator.isLength(data.password, {min: 6, max: 30})){
+    if(!Validator.isLength(data.password, {min: 6, max: 30})){
         errors.password = 'Password must be between 6 and 30 charachters';
     }
     return {

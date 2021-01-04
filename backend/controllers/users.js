@@ -31,7 +31,6 @@ exports.signupUser = async (req, res) => {
 }
 
 exports.loginUser = async (req, res) => {
-  console.log('Daniel');
   const { errors, isValid} = validateUserInput(req.body);
   console.log(errors, isValid)
   if (!isValid) {

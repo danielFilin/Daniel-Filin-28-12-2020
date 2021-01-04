@@ -55,7 +55,6 @@ export class AuthService {
       email,
       password
     }
-    console.log(BACKEND_URL + "login");
     this.http.post<{token: string, expiresIn: number, userId: string, errors: string}>(BACKEND_URL + `login`, authData)
       .subscribe((responseData) => {
         this.token = responseData.token;
